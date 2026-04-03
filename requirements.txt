@@ -1,0 +1,8 @@
+matplotlib==3.10.8
+pandas==3.0.1
+PyQt5==5.15.11
+pyqtgraph==0.14.0
+pyserial==3.5
+numpy==2.4.2
+requests==2.32.5
+openai==2.24.0
