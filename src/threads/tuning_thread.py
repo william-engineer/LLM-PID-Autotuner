@@ -48,10 +48,12 @@ class AITuningThread(QThread):
             # 降温等待阶段
             self.tuning_log_signal.emit(f"[系统降温] 发送 STOP 指令，等待温度降至 {cooldown_temp}°C 以下...")
             self.command_signal.emit("stop") # 发送停止/冷却指令
+            self.command_signal.emit("forced-cooling on")
             while self.is_running:
                 current_t = self.parent_app.latest_temp
                 if current_t <= cooldown_temp:
                     self.tuning_log_signal.emit(f"[降温完成] 当前温度: {current_t:.1f}°C，系统已冷却。")
+                    self.command_signal.emit("forced-cooling off")
                     break
                 self.msleep(100)
 

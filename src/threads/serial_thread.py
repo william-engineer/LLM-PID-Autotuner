@@ -16,6 +16,7 @@ class SerialThread(QThread):
                 line = self.serial.readline()
                 if line is None:
                     continue
+                logging.debug(line)
                 raw_str = line.decode('utf-8', errors='ignore').strip()
                 if not raw_str:
                     continue

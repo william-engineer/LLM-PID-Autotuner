@@ -25,7 +25,7 @@ from core.data_logger import ManualRecorder
 class LLMTurningApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("LLM PID Auto Tuning Expert System v1.0")
+        self.setWindowTitle("LLM PID Auto Tuning Expert System v1.1")
         self.resize(1200, 800)
         
         # 初始化数据结构：默认5条曲线的配置和历史数据
@@ -166,10 +166,10 @@ class LLMTurningApp(QMainWindow):
         group_tune = QGroupBox("Tuning Thresholds")
         layout_tune = QVBoxLayout()
         self.sp_maxrounds = QSpinBox(); self.sp_maxrounds.setValue(10)
-        self.sp_target = QDoubleSpinBox(); self.sp_target.setValue(60.0)
-        self.sp_cooldown = QDoubleSpinBox(); self.sp_cooldown.setValue(30.0)
+        self.sp_target = QDoubleSpinBox(); self.sp_target.setRange(0,1000); self.sp_target.setValue(60.0)
+        self.sp_cooldown = QDoubleSpinBox(); self.sp_cooldown.setRange(0,1000); self.sp_cooldown.setValue(30.0)
         self.sp_timeout = QSpinBox(); self.sp_timeout.setRange(0, 3600); self.sp_timeout.setValue(600)
-        self.sp_stable_dur = QDoubleSpinBox(); self.sp_stable_dur.setValue(60.0)
+        self.sp_stable_dur = QDoubleSpinBox(); self.sp_stable_dur.setRange(0,3600); self.sp_stable_dur.setValue(60.0)
         self.sp_overshoot = QDoubleSpinBox(); self.sp_overshoot.setValue(2.0)
         self.sp_stable_band = QDoubleSpinBox(); self.sp_stable_band.setValue(1.0)
 
@@ -192,7 +192,7 @@ class LLMTurningApp(QMainWindow):
         # LCD 温度显示
         lcd_layout = QHBoxLayout()
         self.lcd = QLCDNumber()
-        self.lcd.setDigitCount(4)
+        self.lcd.setDigitCount(5)
         self.lcd.setMinimumSize(150, 60)
         self.lcd.setSegmentStyle(QLCDNumber.Flat)
         lcd_palette = self.lcd.palette()
@@ -522,7 +522,7 @@ class LLMTurningApp(QMainWindow):
         cmd_map = {
             "START": "start",
             "STOP": "stop",
-            "COOL": "forced-cooling",
+            "COOL": "forced-cooling on",
             "GET PID": "get-pid"
         }
         cmd_str = cmd_map.get(btn_text, "")
